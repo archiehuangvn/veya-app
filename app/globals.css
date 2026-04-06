@@ -149,7 +149,7 @@ img { display: block; max-width: 100%; }
 /* ---------- Phone Frame ---------- */
 .phone-frame {
   width: 100%;
-  max-width: 390px;
+  max-width: 420px;
   min-height: 100dvh;
   background: var(--bg-base);
   display: flex;
@@ -179,6 +179,7 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   gap: 8px;
   padding: 14px 28px;
+  min-height: 48px; /* Touch friendly */
   border-radius: var(--radius-full);
   font-size: 15px;
   font-weight: 600;

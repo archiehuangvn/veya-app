@@ -12,7 +12,7 @@ import {
 import { db, auth } from '@/lib/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 
-const ADMIN_EMAIL = 'admin@veya.app'
+const ADMIN_EMAIL = 'archiehuang.work@gmail.com'
 
 interface UserDoc {
   uid: string

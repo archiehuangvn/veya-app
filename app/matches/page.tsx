@@ -1,9 +1,8 @@
-﻿'use client'
+'use client'
 
 import Link from 'next/link'
 import { AppProvider, useAppState } from '@/store/appState'
 import { profiles } from '@/data/mockData'
-import NavigationBar from '@/components/NavigationBar'
 
 function formatMatchDate(iso: string): string {
   const d = new Date(iso)
@@ -109,8 +108,6 @@ function MatchesContent() {
           </div>
         )}
       </div>
-
-      <NavigationBar />
     </div>
   )
 }

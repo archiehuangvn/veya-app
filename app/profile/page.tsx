@@ -1,9 +1,8 @@
-﻿'use client'
+'use client'
 
 import { useRouter } from 'next/navigation'
 import { profiles } from '@/data/mockData'
 import AudioPlayer from '@/components/AudioPlayer'
-import NavigationBar from '@/components/NavigationBar'
 
 // Use first profile as "current user" for demo
 const currentUser = profiles[0]
@@ -172,8 +171,6 @@ export default function ProfilePage() {
           ))}
         </div>
       </div>
-
-      <NavigationBar />
     </div>
   )
 }

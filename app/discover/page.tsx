@@ -1,11 +1,10 @@
-﻿'use client'
+'use client'
 
 import { useState, useCallback, useEffect } from 'react'
 import { AppProvider, useAppState } from '@/store/appState'
 import { profiles } from '@/data/mockData'
 import SwipeCard from '@/components/SwipeCard'
 import BottomAction from '@/components/BottomAction'
-import NavigationBar from '@/components/NavigationBar'
 import { Analytics } from '@/utils/analytics'
 
 function DiscoverContent() {
@@ -137,7 +136,6 @@ function DiscoverContent() {
       </div>
 
       {stack.length > 0 && <BottomAction onSkip={handleSkip} onLike={handleLike} />}
-      <NavigationBar />
     </div>
   )
 }
