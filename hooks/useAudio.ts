@@ -37,10 +37,6 @@ export function useAudio(src: string): AudioState & AudioControls {
     audio.addEventListener('loadedmetadata', onDurationChange)
     audio.addEventListener('ended', onEnded)
 
-    setIsPlaying(false)
-    setCurrentTime(0)
-    setDuration(0)
-
     return () => {
       audio.pause()
       audio.removeEventListener('timeupdate', onTimeUpdate)

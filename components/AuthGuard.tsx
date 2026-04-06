@@ -30,7 +30,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       // User logged in: Check Firestore for profileComplete
       setCheckingProfile(true)
       try {
-        const snap = await getDoc(doc(db, 'users', user.uid))
+        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+        const snap = await Promise.race([
+          getDoc(doc(db, 'users', user.uid)),
+          timeoutPromise
+        ]) as any
+        
         const data = snap.data()
         const isCompleted = data?.profileCompleted === true
 
@@ -53,7 +58,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   if (loading || checkingProfile) {
     return (
       <div style={{
-        flex: 1, display: 'flex',
+        flex: 1, display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center', minHeight: '100dvh',
       }}>
         <div style={{
@@ -62,6 +67,9 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           borderTopColor: 'transparent',
           animation: 'spin 0.8s linear infinite',
         }}/>
+        <p style={{ marginTop: 24, fontSize: 13, color: 'var(--text-muted)', fontWeight: 500, letterSpacing: '0.5px' }}>
+          {loading ? 'Đang tải xác thực...' : 'Đang kiểm tra hồ sơ...'}
+        </p>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     )

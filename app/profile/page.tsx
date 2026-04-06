@@ -164,13 +164,13 @@ export default function ProfilePage() {
 
             <Section title="Mục tiêu hẹn hò">
               <label className="block text-sm text-gray-400 mb-1">Tình trạng</label>
-              <select className="input" value={formData.relationshipStatus || 'single'} onChange={e => setFormData({...formData, relationshipStatus: e.target.value as any})} style={{marginBottom:12}}>
+              <select className="input" value={formData.relationshipStatus || 'single'} onChange={e => setFormData({...formData, relationshipStatus: e.target.value as 'single' | 'complicated'})} style={{marginBottom:12}}>
                 <option value="single">Độc thân</option>
                 <option value="complicated">Đang phức tạp</option>
               </select>
 
               <label className="block text-sm text-gray-400 mb-1">Mục tiêu</label>
-              <select className="input" value={formData.datingGoal || 'dating'} onChange={e => setFormData({...formData, datingGoal: e.target.value as any})} style={{marginBottom:12}}>
+              <select className="input" value={formData.datingGoal || 'dating'} onChange={e => setFormData({...formData, datingGoal: e.target.value as 'friends' | 'dating' | 'serious'})} style={{marginBottom:12}}>
                 <option value="friends">Tìm bạn</option>
                 <option value="dating">Hẹn hò</option>
                 <option value="serious">Nghiêm túc</option>
@@ -251,7 +251,7 @@ function Section({ title, children }: { title: string, children: React.ReactNode
   )
 }
 
-function GridRow({ label, value }: { label: string, value: any }) {
+function GridRow({ label, value }: { label: string, value: string | number | undefined | null }) {
   if (!value) return null
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12, fontSize: 14 }}>

@@ -366,7 +366,7 @@ function Step4Voice({ data, onChange, onSkip }: { data: OnboardingData, onChange
               padding: 12, borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', 
               background: 'var(--bg-surface)', fontSize: 13, color: 'var(--text-secondary)' 
             }}>
-              "{s}"
+              &quot;{s}&quot;
             </div>
           ))}
         </div>
