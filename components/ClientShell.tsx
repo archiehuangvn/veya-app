@@ -16,20 +16,24 @@ export default function ClientShell({ children }: { children: React.ReactNode })
                   pathname === '/auth' || 
                   pathname === '/admin' || 
                   pathname.startsWith('/chat/')
+
+  const isAdmin = pathname === '/admin'
                   
+  const content = (
+    <AuthGuard>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100dvh', overflow: 'hidden' }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          {children}
+        </div>
+        {!hideNav && <NavigationBar />}
+      </div>
+    </AuthGuard>
+  )
+
   return (
     <>
-      <IntroGuard>
-        <AuthGuard>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100dvh', overflow: 'hidden' }}>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-              {children}
-            </div>
-            {!hideNav && <NavigationBar />}
-          </div>
-        </AuthGuard>
-      </IntroGuard>
-      <FeedbackButton />
+      {isAdmin ? content : <IntroGuard>{content}</IntroGuard>}
+      {!isAdmin && <FeedbackButton />}
     </>
   )
 }
