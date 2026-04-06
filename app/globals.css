@@ -354,3 +354,32 @@ img { display: block; max-width: 100%; }
 /* ---------- Hide Scrollbars ---------- */
 * { scrollbar-width: none; }
 *::-webkit-scrollbar { display: none; }
+
+/* Forms & UI Elements */
+.input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.input:focus {
+  border-color: var(--brand-primary);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+  

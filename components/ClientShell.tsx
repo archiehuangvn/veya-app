@@ -11,10 +11,10 @@ const NavigationBar  = dynamic(() => import('./NavigationBar'),  { ssr: false })
 export default function ClientShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   
-  // Show bottom nav everywhere EXCEPT intro, auth, admin, and individual chat pages
   const hideNav = pathname === '/' || 
                   pathname === '/auth' || 
                   pathname === '/admin' || 
+                  pathname === '/onboarding' ||
                   pathname.startsWith('/chat/')
 
   const isAdmin = pathname === '/admin'

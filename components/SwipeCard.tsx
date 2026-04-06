@@ -1,9 +1,9 @@
-﻿'use client'
+'use client'
 
 import { useCallback } from 'react'
 import TinderCard from 'react-tinder-card'
 import AudioPlayer from './AudioPlayer'
-import type { UserProfile } from '@/data/mockData'
+import type { UserProfile } from '@/types/user'
 
 interface SwipeCardProps {
   profile: UserProfile
@@ -140,13 +140,13 @@ export default function SwipeCard({ profile, onSwipe }: SwipeCardProps) {
 
           {/* Tags */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 14 }}>
-            {profile.tags.map((tag) => (
+            {(profile.tags || []).map((tag) => (
               <span key={tag} className="tag">{tag}</span>
             ))}
           </div>
 
           {/* Audio Player — prominent */}
-          <AudioPlayer src={profile.audioUrl} />
+          {profile.audioUrl && <AudioPlayer src={profile.audioUrl} />}
         </div>
       </div>
     </TinderCard>
