@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore'
 import { db, auth } from '@/lib/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
+import { profiles } from '@/data/mockData'
 
 const ADMIN_EMAIL = 'archiehuang.work@gmail.com'
 
@@ -213,9 +214,51 @@ function SeedProfile() {
     setTimeout(() => setMsg(''), 3000)
   }
 
+  const seedAll = async () => {
+    if (!confirm('Bạn có chắc chắn muốn tự động chèn 20 hồ sơ mẫu vào Database không?')) return
+    setSaving(true)
+    let count = 0
+    for (const p of profiles) {
+      try {
+        await setDoc(doc(db, 'users', p.id), {
+          name: p.name,
+          bio: p.bio || '',
+          avatar: '',
+          audioUrl: p.audioUrl || '',
+          tags: p.tags || [],
+          gender: p.gender || 'unknown',
+          age: p.age || 20,
+          district: p.district || '',
+          createdAt: serverTimestamp(),
+          lastActive: serverTimestamp(),
+        }, { merge: true })
+        count++
+      } catch (err) {
+        console.error('Lỗi khi seed profile', p.id, err)
+      }
+    }
+    setSaving(false)
+    setMsg(`✅ Đã chèn tự động ${count} Profiles mẫu!`)
+    setTimeout(() => setMsg(''), 4000)
+  }
+
   return (
     <div style={{ maxWidth: 480 }}>
       {msg && <div style={{ marginBottom: 12, color: '#FF3CAC', fontWeight: 600 }}>{msg}</div>}
+      
+      <button 
+        onClick={seedAll} 
+        disabled={saving} 
+        style={{ ...btnPrimary, width: '100%', marginBottom: 24, background: '#FF3CAC' }}
+      >
+        {saving ? 'Đang chạy...' : '🚀 Tự động chèn 20 Profiles Mẫu'}
+      </button>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+        <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.1)' }} />
+        <div style={{ color: '#A0A0C0', fontSize: 13, fontWeight: 600 }}>HOẶC TẠO THỦ CÔNG</div>
+        <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.1)' }} />
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <input style={inputStyle} placeholder="Tên *" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
         <textarea style={{ ...inputStyle, height: 80, resize: 'vertical' }} placeholder="Bio" value={form.bio} onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))} />
