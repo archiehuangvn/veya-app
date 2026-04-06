@@ -7,6 +7,7 @@ import { doc, setDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { uploadAudio } from '@/lib/storageAudio'
 import AudioPlayer from '@/components/AudioPlayer'
+import { markProfileCompletedCache } from '@/components/AuthGuard'
 
 export type OnboardingData = {
   name: string
@@ -74,6 +75,7 @@ export default function OnboardingPage() {
         profileCompleted: true,
       }, { merge: true })
 
+      markProfileCompletedCache(user.uid)
       router.replace('/discover')
     } catch (err) {
       console.error(err)

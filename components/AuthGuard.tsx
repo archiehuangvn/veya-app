@@ -10,6 +10,12 @@ import { db } from '@/lib/firebase'
 
 const PUBLIC_ROUTES = ['/auth']
 
+const profileCache: Record<string, boolean> = {}
+
+export const markProfileCompletedCache = (uid: string) => {
+  profileCache[uid] = true
+}
+
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router   = useRouter()
   const pathname = usePathname()
@@ -27,6 +33,17 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         return
       }
 
+      // Use cache if available to prevent flashing spinner on every route change
+      if (profileCache[user.uid] !== undefined) {
+        const isCompleted = profileCache[user.uid]
+        if (!isCompleted && pathname !== '/onboarding') {
+          router.replace('/onboarding')
+        } else if (isCompleted && (pathname === '/auth' || pathname === '/onboarding')) {
+          router.replace('/discover')
+        }
+        return
+      }
+
       // User logged in: Check Firestore for profileComplete
       setCheckingProfile(true)
       try {
@@ -38,6 +55,9 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         
         const data = snap.data()
         const isCompleted = data?.profileCompleted === true
+        
+        // Save to cache
+        profileCache[user.uid] = isCompleted
 
         if (!isCompleted && pathname !== '/onboarding') {
           router.replace('/onboarding')
